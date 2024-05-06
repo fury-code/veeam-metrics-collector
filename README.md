@@ -1,6 +1,6 @@
 # Veeam Backup Metrics Collector
-This is a metrics collector which queries data from Veeam backup solutions
-and writes it to InfluxDB.
+This is a metrics collector written in Python which queries data from 
+Veeam backup solutions and writes it to InfluxDB.
 
 This project is inspired by another project from [Jorge de la Cruz](https://github.com/jorgedlcruz/veeam-backup-for-microsoft365-grafana).
 
