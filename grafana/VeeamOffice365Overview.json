@@ -33,7 +33,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.4.2"
+      "version": "11.0.0"
     },
     {
       "type": "datasource",
@@ -83,7 +83,7 @@
   "links": [],
   "panels": [
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -91,149 +91,71 @@
         "y": 0
       },
       "id": 2,
-      "panels": [],
-      "title": "Overview",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 0,
-        "y": 1
-      },
-      "id": 1,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/^_value 7\\.1\\.0\\.1501$/",
-          "values": false
-        },
-        "showPercentChange": false,
-        "text": {
-          "valueSize": 100
-        },
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
-          },
-          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_version\")\n  |> keep(columns: [\"veeamVersion\"])\n  |> distinct(column: \"veeamVersion\")",
-          "refId": "A"
-        }
-      ],
-      "title": "Veeam Version",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
-      "id": 14,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "text": {
-          "valueSize": 100
-        },
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
-          },
-          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_proxies\")\n  |> filter(fn: (r) => r[\"_field\"] == \"threadsNumber\")\n  |> last ()",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Threads Number",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 7
-      },
-      "id": 3,
       "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text"
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 1
+          },
+          "id": 1,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/^_value 7\\.1\\.0\\.1501$/",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {
+              "valueSize": 100
+            },
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_version\")\n  |> keep(columns: [\"veeamVersion\"])\n  |> distinct(column: \"veeamVersion\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Veeam Version",
+          "transparent": true,
+          "type": "stat"
+        },
         {
           "datasource": {
             "type": "influxdb",
@@ -244,38 +166,12 @@
               "color": {
                 "mode": "thresholds"
               },
-              "mappings": [
-                {
-                  "options": {
-                    "1": {
-                      "color": "purple",
-                      "index": 3,
-                      "text": "Other"
-                    },
-                    "2": {
-                      "color": "red",
-                      "index": 2,
-                      "text": "Failed"
-                    },
-                    "3": {
-                      "color": "orange",
-                      "index": 1,
-                      "text": "Warning"
-                    },
-                    "4": {
-                      "color": "green",
-                      "index": 0,
-                      "text": "Success"
-                    }
-                  },
-                  "type": "value"
-                }
-              ],
+              "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "text"
                   }
                 ]
               }
@@ -284,15 +180,14 @@
           },
           "gridPos": {
             "h": 6,
-            "w": 6,
-            "x": 0,
-            "y": 2
+            "w": 12,
+            "x": 12,
+            "y": 1
           },
-          "id": 4,
-          "maxPerRow": 8,
+          "id": 14,
           "options": {
-            "colorMode": "background",
-            "graphMode": "none",
+            "colorMode": "value",
+            "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
@@ -309,144 +204,255 @@
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.2",
-          "repeat": "JobName",
-          "repeatDirection": "h",
+          "pluginVersion": "11.0.0",
           "targets": [
             {
               "datasource": {
                 "type": "influxdb",
                 "uid": "${DS_INFLUXDB}"
               },
-              "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\" or r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\" or r[\"_field\"] == \"veeamSessionJobResult\")\n  |> filter(fn: (r) => r[\"veeamjobname\"] =~ /${JobName:regex}/ or r[\"veeamVBRSessionJobName\"] =~ /${JobName:regex}/ )\n  |> group()\n  |> aggregateWindow(every: 24h, fn: min)\n",
+              "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_proxies\")\n  |> filter(fn: (r) => r[\"_field\"] == \"threadsNumber\")\n  |> last ()",
               "refId": "A"
             }
           ],
-          "title": "$JobName",
+          "title": "Total Threads Number",
           "transparent": true,
           "type": "stat"
+        }
+      ],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 3,
+      "panels": [],
+      "title": "Job Status Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "color": "purple",
+                  "index": 3,
+                  "text": "Other"
+                },
+                "2": {
+                  "color": "red",
+                  "index": 2,
+                  "text": "Failed"
+                },
+                "3": {
+                  "color": "orange",
+                  "index": 1,
+                  "text": "Warning"
+                },
+                "4": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Success"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 2
+      },
+      "id": 4,
+      "maxPerRow": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 100
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "repeat": "JobName",
+      "repeatDirection": "h",
+      "targets": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "left",
-                "fillOpacity": 80,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineWidth": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "decimals": 0,
-              "displayName": "${__field.labels.veeamjobname}",
-              "mappings": [
-                {
-                  "options": {
-                    "1": {
-                      "color": "purple",
-                      "index": 3,
-                      "text": "Other"
-                    },
-                    "2": {
-                      "color": "red",
-                      "index": 2,
-                      "text": "Failed"
-                    },
-                    "3": {
-                      "color": "orange",
-                      "index": 1,
-                      "text": "Warning"
-                    },
-                    "4": {
-                      "color": "green",
-                      "index": 0,
-                      "text": "Success"
-                    }
-                  },
-                  "type": "value"
-                }
-              ],
-              "max": 4,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "transparent"
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 24,
-            "x": 0,
-            "y": 8
-          },
-          "id": 108,
-          "options": {
-            "barRadius": 0,
-            "barWidth": 0.97,
-            "fullHighlight": false,
-            "groupWidth": 0.7,
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "orientation": "auto",
-            "showValue": "auto",
-            "stacking": "none",
-            "tooltip": {
-              "mode": "single",
-              "sort": "desc"
-            },
-            "xField": "_time",
-            "xTickLabelRotation": 0,
-            "xTickLabelSpacing": 0
-          },
-          "pluginVersion": "10.4.2",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "influxdb",
-                "uid": "${DS_INFLUXDB}"
-              },
-              "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> filter(fn: (r) => r[\"veeamjobname\"] =~ /${JobName:regex}/)\n  |> group(columns: [\"veeamjobname\"])\n  |> aggregateWindow(every: 24h, fn: min)",
-              "refId": "A"
-            }
-          ],
-          "transparent": true,
-          "type": "barchart"
+          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> filter(fn: (r) => r[\"veeamjobname\"] =~ /${JobName:regex}/)\n  |> group()\n  |> aggregateWindow(every: 24h, fn: min)\n",
+          "refId": "A"
         }
       ],
-      "title": "Job Status Overview",
-      "type": "row"
+      "title": "$JobName",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "displayName": "${__field.labels.veeamjobname}",
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "text",
+                  "index": 4,
+                  "text": "No Data"
+                },
+                "1": {
+                  "color": "purple",
+                  "index": 3,
+                  "text": "Other"
+                },
+                "2": {
+                  "color": "red",
+                  "index": 2,
+                  "text": "Failed"
+                },
+                "3": {
+                  "color": "orange",
+                  "index": 1,
+                  "text": "Warning"
+                },
+                "4": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Success"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "max": 4,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 108,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 1,
+        "fullHighlight": false,
+        "groupWidth": 1,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "single",
+          "sort": "desc"
+        },
+        "xField": "_time",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": -100
+      },
+      "pluginVersion": "10.4.2",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> filter(fn: (r) => r[\"veeamjobname\"] =~ /${JobName:regex}/)\n  |> group(columns: [\"veeamjobname\"])\n  |> aggregateWindow(every: 24h, fn: min, timeSrc: \"_time\", timeDst: \"_time\", createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "transparent": true,
+      "type": "barchart"
     },
     {
       "collapsed": true,
@@ -454,7 +460,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 15
       },
       "id": 97,
       "panels": [
@@ -507,7 +513,7 @@
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.2",
+          "pluginVersion": "11.0.0",
           "repeat": "JobName",
           "repeatDirection": "h",
           "targets": [
@@ -516,7 +522,7 @@
                 "type": "influxdb",
                 "uid": "${DS_INFLUXDB}"
               },
-              "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"totalDuration\")\n  |> filter(fn: (r) => r[\"veeamjobname\"] =~ /${JobName:regex}/ )\n  |> group(columns: [\"veeamjobname\"])\n  |> sum(column: \"_value\")",
+              "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"totalDuration\")\n  |> filter(fn: (r) => r[\"veeamjobname\"] =~ /${JobName:regex}/ )\n  |> group(columns: [\"veeamjobname\"])\n  |> last ()",
               "refId": "A"
             }
           ],
@@ -525,7 +531,7 @@
           "type": "stat"
         }
       ],
-      "title": "Job Duration",
+      "title": "The Duration Of The Last Job Run",
       "type": "row"
     },
     {
@@ -534,98 +540,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
-      },
-      "id": 50,
-      "panels": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "text"
-                  }
-                ]
-              }
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "_value"
-                },
-                "properties": [
-                  {
-                    "id": "displayName"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 6,
-            "x": 0,
-            "y": 4
-          },
-          "id": 49,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "text": {
-              "valueSize": 100
-            },
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.2",
-          "repeat": "JobName",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "influxdb",
-                "uid": "${DS_INFLUXDB}"
-              },
-              "query": "from(bucket: \"veeam\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"processedObjects\")\r\n  |> filter(fn: (r) => r[\"veeamjobname\"] =~ /${JobName:regex}/)\r\n  |> group ()\r\n  |> sum(column: \"_value\")",
-              "refId": "A"
-            }
-          ],
-          "title": "$JobName",
-          "transparent": true,
-          "type": "stat"
-        }
-      ],
-      "title": "Jobs Processed Objects in chosen time frame",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 10
+        "y": 16
       },
       "id": 66,
       "panels": [
@@ -724,6 +639,7 @@
               "showLegend": true
             },
             "tooltip": {
+              "maxHeight": 600,
               "mode": "single",
               "sort": "none"
             }
@@ -764,7 +680,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 17
       },
       "id": 77,
       "panels": [
@@ -856,7 +772,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 6
+            "y": 14
           },
           "id": 81,
           "options": {
@@ -867,6 +783,7 @@
               "showLegend": true
             },
             "tooltip": {
+              "maxHeight": 600,
               "mode": "single",
               "sort": "none"
             }
@@ -907,7 +824,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 18
       },
       "id": 15,
       "panels": [
@@ -926,8 +843,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "text",
-                    "value": null
+                    "color": "text"
                   }
                 ]
               }
@@ -938,7 +854,7 @@
             "h": 9,
             "w": 4,
             "x": 0,
-            "y": 7
+            "y": 25
           },
           "id": 9,
           "options": {
@@ -960,7 +876,7 @@
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.2",
+          "pluginVersion": "11.0.0",
           "targets": [
             {
               "datasource": {
@@ -990,8 +906,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "text",
-                    "value": null
+                    "color": "text"
                   }
                 ]
               }
@@ -1002,7 +917,7 @@
             "h": 9,
             "w": 4,
             "x": 4,
-            "y": 7
+            "y": 25
           },
           "id": 13,
           "options": {
@@ -1024,7 +939,7 @@
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.2",
+          "pluginVersion": "11.0.0",
           "targets": [
             {
               "datasource": {
@@ -1063,8 +978,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -1075,7 +989,7 @@
             "h": 9,
             "w": 8,
             "x": 8,
-            "y": 7
+            "y": 25
           },
           "id": 19,
           "options": {
@@ -1091,7 +1005,7 @@
             },
             "showHeader": true
           },
-          "pluginVersion": "10.4.2",
+          "pluginVersion": "11.0.0",
           "targets": [
             {
               "datasource": {
@@ -1130,8 +1044,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -1142,7 +1055,7 @@
             "h": 9,
             "w": 8,
             "x": 16,
-            "y": 7
+            "y": 25
           },
           "id": 23,
           "options": {
@@ -1158,7 +1071,7 @@
             },
             "showHeader": true
           },
-          "pluginVersion": "10.4.2",
+          "pluginVersion": "11.0.0",
           "targets": [
             {
               "datasource": {
@@ -1183,7 +1096,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 19
       },
       "id": 28,
       "panels": [
@@ -1197,13 +1110,14 @@
               "color": {
                 "mode": "continuous-GrYlRd"
               },
+              "fieldMinMax": false,
               "mappings": [],
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "transparent",
-                    "value": null
+                    "color": "transparent"
                   }
                 ]
               },
@@ -1252,7 +1166,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 14
+            "y": 17
           },
           "id": 35,
           "options": {
@@ -1273,7 +1187,7 @@
             "sizing": "auto",
             "valueMode": "color"
           },
-          "pluginVersion": "10.4.2",
+          "pluginVersion": "11.0.0",
           "repeat": "Repository",
           "repeatDirection": "h",
           "targets": [
@@ -1323,8 +1237,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "#EAB839",
@@ -1344,7 +1257,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 22
+            "y": 25
           },
           "id": 27,
           "options": {
@@ -1362,7 +1275,7 @@
             "showThresholdMarkers": true,
             "sizing": "auto"
           },
-          "pluginVersion": "10.4.2",
+          "pluginVersion": "11.0.0",
           "repeat": "Repository",
           "repeatDirection": "h",
           "targets": [
@@ -1395,14 +1308,14 @@
           "type": "influxdb",
           "uid": "${DS_INFLUXDB}"
         },
-        "definition": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"veeamjobname\"])\n  |> group(columns: [\"veeamjobname\"])",
+        "definition": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> keep(columns: [\"veeamjobname\"])\n  |> group(columns: [\"veeamjobname\"])",
         "hide": 0,
         "includeAll": true,
         "label": "JobName",
         "multi": true,
         "name": "JobName",
         "options": [],
-        "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"veeamjobname\"])\n  |> group(columns: [\"veeamjobname\"])",
+        "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_office365_jobs\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> keep(columns: [\"veeamjobname\"])\n  |> group(columns: [\"veeamjobname\"])",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1455,10 +1368,11 @@
     "from": "now-7d",
     "to": "now"
   },
+  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {},
   "timezone": "browser",
   "title": "Veeam Office 365 Overview",
   "uid": "adka4bhhhjdhcc",
-  "version": 78,
+  "version": 91,
   "weekStart": ""
 }
