@@ -2,3 +2,5 @@ src/.env
 .github
 venv/
 README.md
+pictures/
+grafana/
