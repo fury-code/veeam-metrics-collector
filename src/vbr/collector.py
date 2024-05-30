@@ -93,7 +93,10 @@ def backup_replication(env_config):
     # Veeam Backup & Replication Sessions. This part will check VBR Sessions
     sessions_url = f"{vbr_base_url}/sessions?limit=1000"
     response = requests.get(sessions_url, headers=vbr_headers, verify=False)
-    data = response.json()["data"]
+    try:
+        data = response.json()["data"]
+    except KeyError:
+        data = False
 
     if not data:
         print("There are no new veeam_vbr_sessions")
@@ -145,7 +148,10 @@ def backup_replication(env_config):
     # Veeam Backup & Replication Managed Servers. This part will check VBR Managed Servers.
     managed_servers_url = f"{vbr_base_url}/backupInfrastructure/managedServers"
     response = requests.get(managed_servers_url, headers=vbr_headers, verify=False)
-    data = response.json()["data"]
+    try:
+        data = response.json()["data"]
+    except KeyError:
+        data = False
 
     num_servers = 0
 
@@ -178,7 +184,10 @@ def backup_replication(env_config):
     # Veeam Backup & Replication Repositories. This part will check VBR Repositories
     repository_url = f"{vbr_base_url}/backupInfrastructure/repositories"
     response = requests.get(repository_url, headers=vbr_headers, verify=False)
-    data = response.json()["data"]
+    try:
+        data = response.json()["data"]
+    except KeyError:
+        data = False
 
     if not data:
         print("There are no repositories")
@@ -194,8 +203,10 @@ def backup_replication(env_config):
             state_response = requests.get(
                 repository_state_url, headers=vbr_headers, verify=False
             )
-
-            state_data = state_response.json()["data"][0]
+            try:
+                state_data = state_response.json()["data"][0]
+            except KeyError:
+                data = False
             repo_capacity = state_data["capacityGB"]
             repo_free = state_data["freeGB"]
             repo_used = state_data["usedSpaceGB"]
@@ -242,7 +253,10 @@ def backup_replication(env_config):
     # Veeam Backup & Replication Proxies. This part will check VBR Proxies
     proxy_url = f"{vbr_base_url}/backupInfrastructure/proxies"
     response = requests.get(proxy_url, headers=vbr_headers, verify=False)
-    data = response.json()["data"]
+    try:
+        data = response.json()["data"]
+    except KeyError:
+        data = False
 
     if not data:
         print("There are no proxies")
@@ -275,7 +289,10 @@ def backup_replication(env_config):
     # Veeam Backup & Replication Backup Objects. This part will check VBR Backup Objects
     objects_url = f"{vbr_base_url}/backupObjects"
     response = requests.get(objects_url, headers=vbr_headers, verify=False)
-    data = response.json()["data"]
+    try:
+        data = response.json()["data"]
+    except KeyError:
+        data = False
 
     if not data:
         print("There are no objects")
