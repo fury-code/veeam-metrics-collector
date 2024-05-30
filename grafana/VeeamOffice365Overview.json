@@ -7,6 +7,14 @@
       "type": "datasource",
       "pluginId": "influxdb",
       "pluginName": "InfluxDB"
+    },
+    {
+      "name": "DS_PROMETHEUS-ONPREM",
+      "label": "prometheus-onprem",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
     }
   ],
   "__elements": {},
@@ -42,6 +50,12 @@
       "version": "1.0.0"
     },
     {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
       "type": "panel",
       "id": "stat",
       "name": "Stat",
@@ -51,6 +65,12 @@
       "type": "panel",
       "id": "table",
       "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
       "version": ""
     },
     {
@@ -80,7 +100,32 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Git",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://github.com/fury-code"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Website",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://furycode.org/"
+    }
+  ],
   "panels": [
     {
       "collapsed": true,
@@ -119,7 +164,7 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 1
+            "y": 9
           },
           "id": 1,
           "options": {
@@ -182,7 +227,7 @@
             "h": 6,
             "w": 12,
             "x": 12,
-            "y": 1
+            "y": 9
           },
           "id": 14,
           "options": {
@@ -491,7 +536,7 @@
             "h": 5,
             "w": 6,
             "x": 0,
-            "y": 3
+            "y": 11
           },
           "id": 104,
           "options": {
@@ -628,7 +673,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 5
+            "y": 13
           },
           "id": 70,
           "options": {
@@ -772,7 +817,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 14
+            "y": 22
           },
           "id": 81,
           "options": {
@@ -854,7 +899,7 @@
             "h": 9,
             "w": 4,
             "x": 0,
-            "y": 25
+            "y": 33
           },
           "id": 9,
           "options": {
@@ -917,7 +962,7 @@
             "h": 9,
             "w": 4,
             "x": 4,
-            "y": 25
+            "y": 33
           },
           "id": 13,
           "options": {
@@ -989,7 +1034,7 @@
             "h": 9,
             "w": 8,
             "x": 8,
-            "y": 25
+            "y": 33
           },
           "id": 19,
           "options": {
@@ -1055,7 +1100,7 @@
             "h": 9,
             "w": 8,
             "x": 16,
-            "y": 25
+            "y": 33
           },
           "id": 23,
           "options": {
@@ -1166,7 +1211,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 17
+            "y": 25
           },
           "id": 35,
           "options": {
@@ -1257,7 +1302,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 25
+            "y": 33
           },
           "id": 27,
           "options": {
@@ -1295,6 +1340,31 @@
       ],
       "title": "Repository Overview",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS-ONPREM}"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 112,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://furycode.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fflame.26b9b203.png&w=640&q=75\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.0.0",
+      "transparent": true,
+      "type": "text"
     }
   ],
   "refresh": "",
@@ -1373,6 +1443,6 @@
   "timezone": "browser",
   "title": "Veeam Office 365 Overview",
   "uid": "adka4bhhhjdhcc",
-  "version": 91,
+  "version": 93,
   "weekStart": ""
 }

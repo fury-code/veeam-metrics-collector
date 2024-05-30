@@ -1,526 +1,595 @@
 {
-    "__inputs": [
-      {
-        "name": "DS_INFLUXDB",
-        "label": "influxdb",
-        "description": "",
-        "type": "datasource",
-        "pluginId": "influxdb",
-        "pluginName": "InfluxDB"
-      }
-    ],
-    "__elements": {},
-    "__requires": [
-      {
-        "type": "panel",
-        "id": "barchart",
-        "name": "Bar chart",
-        "version": ""
-      },
-      {
-        "type": "grafana",
-        "id": "grafana",
-        "name": "Grafana",
-        "version": "11.0.0"
-      },
-      {
-        "type": "datasource",
-        "id": "influxdb",
-        "name": "InfluxDB",
-        "version": "1.0.0"
-      },
-      {
-        "type": "panel",
-        "id": "stat",
-        "name": "Stat",
-        "version": ""
-      },
-      {
-        "type": "panel",
-        "id": "table",
-        "name": "Table",
-        "version": ""
-      }
-    ],
-    "annotations": {
-      "list": [
-        {
-          "builtIn": 1,
-          "datasource": {
-            "type": "grafana",
-            "uid": "-- Grafana --"
-          },
-          "enable": true,
-          "hide": true,
-          "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
-          "type": "dashboard"
-        }
-      ]
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "influxdb",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
     },
-    "editable": true,
-    "fiscalYearStartMonth": 0,
-    "graphTooltip": 0,
-    "id": null,
-    "links": [],
-    "panels": [
+    {
+      "name": "DS_PROMETHEUS-ONPREM",
+      "label": "prometheus-onprem",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
       {
-        "collapsed": false,
-        "gridPos": {
-          "h": 1,
-          "w": 24,
-          "x": 0,
-          "y": 0
-        },
-        "id": 25,
-        "panels": [],
-        "title": "Overview",
-        "type": "row"
-      },
-      {
+        "builtIn": 1,
         "datasource": {
-          "type": "influxdb",
-          "uid": "${DS_INFLUXDB}"
+          "type": "grafana",
+          "uid": "-- Grafana --"
         },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "text",
-                  "value": null
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 5,
-          "w": 5,
-          "x": 0,
-          "y": 1
-        },
-        "id": 27,
-        "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "/^_value 12\\.1\\.0\\.0$/",
-            "values": false
-          },
-          "showPercentChange": false,
-          "text": {
-            "valueSize": 100
-          },
-          "textMode": "auto",
-          "wideLayout": true
-        },
-        "pluginVersion": "11.0.0",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "${DS_INFLUXDB}"
-            },
-            "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_info\")\n  |> keep(columns: [\"veeamVBRVersion\"])\n  |> distinct(column: \"veeamVBRVersion\")",
-            "refId": "A"
-          }
-        ],
-        "title": "Veeam Version",
-        "transparent": true,
-        "type": "stat"
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Git",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://github.com/fury-code"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Website",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://furycode.org/"
+    }
+  ],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
       },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "${DS_INFLUXDB}"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "custom": {
-              "align": "auto",
-              "cellOptions": {
-                "type": "auto"
-              },
-              "inspect": false
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "transparent",
-                  "value": null
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 6,
-          "w": 19,
-          "x": 5,
-          "y": 1
-        },
-        "id": 39,
-        "options": {
-          "cellHeight": "sm",
-          "footer": {
-            "countRows": false,
-            "enablePagination": true,
-            "fields": [],
-            "reducer": [
-              "sum"
-            ],
-            "show": false
-          },
-          "showHeader": true
-        },
-        "pluginVersion": "11.0.0",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "${DS_INFLUXDB}"
-            },
-            "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_managedservers\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamVBRMSInternalID\")\n  |> group(columns: [\"veeamVBRMSName\"])\n  |> last()",
-            "refId": "A"
-          }
-        ],
-        "title": "Servers",
-        "transformations": [
-          {
-            "id": "merge",
-            "options": {}
-          },
-          {
-            "id": "organize",
-            "options": {
-              "excludeByName": {
-                "_field": true,
-                "_measurement": true,
-                "_time": true,
-                "_value": true
-              },
-              "includeByName": {},
-              "indexByName": {
-                "_field": 3,
-                "_measurement": 4,
-                "_time": 1,
-                "_value": 2,
-                "veeamVBR": 0,
-                "veeamVBRMSDescription": 5,
-                "veeamVBRMStype": 6
-              },
-              "renameByName": {
-                "veeamVBR": "Name",
-                "veeamVBRMSDescription": "Description",
-                "veeamVBRMStype": "Type"
-              }
-            }
-          }
-        ],
-        "transparent": true,
-        "type": "table"
+      "id": 25,
+      "panels": [],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
       },
-      {
-        "collapsed": false,
-        "gridPos": {
-          "h": 1,
-          "w": 24,
-          "x": 0,
-          "y": 7
-        },
-        "id": 1,
-        "panels": [],
-        "title": "Job Status Overview",
-        "type": "row"
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "${DS_INFLUXDB}"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "options": {
-                  "1": {
-                    "color": "purple",
-                    "index": 3,
-                    "text": "Other"
-                  },
-                  "2": {
-                    "color": "red",
-                    "index": 2,
-                    "text": "Failed"
-                  },
-                  "3": {
-                    "color": "orange",
-                    "index": 1,
-                    "text": "Warning"
-                  },
-                  "4": {
-                    "color": "green",
-                    "index": 0,
-                    "text": "Success"
-                  }
-                },
-                "type": "value"
+                "color": "text",
+                "value": null
               }
-            ],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 0,
+        "y": 1
+      },
+      "id": 27,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^_value 12\\.1\\.0\\.0$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 100
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_info\")\n  |> keep(columns: [\"veeamVBRVersion\"])\n  |> distinct(column: \"veeamVBRVersion\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Veeam Version",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 19,
+        "x": 5,
+        "y": 1
+      },
+      "id": 39,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": [],
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_managedservers\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamVBRMSInternalID\")\n  |> group(columns: [\"veeamVBRMSName\"])\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Servers",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "_field": true,
+              "_measurement": true,
+              "_time": true,
+              "_value": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "_field": 3,
+              "_measurement": 4,
+              "_time": 1,
+              "_value": 2,
+              "veeamVBR": 0,
+              "veeamVBRMSDescription": 5,
+              "veeamVBRMStype": 6
+            },
+            "renameByName": {
+              "veeamVBR": "Name",
+              "veeamVBRMSDescription": "Description",
+              "veeamVBRMStype": "Type"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 1,
+      "panels": [],
+      "title": "Job Status Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "color": "purple",
+                  "index": 3,
+                  "text": "Other"
+                },
+                "2": {
+                  "color": "red",
+                  "index": 2,
+                  "text": "Failed"
+                },
+                "3": {
+                  "color": "orange",
+                  "index": 1,
+                  "text": "Warning"
+                },
+                "4": {
                   "color": "green",
-                  "value": null
+                  "index": 0,
+                  "text": "Success"
                 }
-              ]
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "maxPerRow": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 100
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "repeat": "JobName",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamSessionJobResult\")\n  |> filter(fn: (r) => r[\"veeamVBRSessionJobName\"] =~ /${JobName:regex}/ )\n  |> group()\n  |> aggregateWindow(every: 24h, fn: min)\n",
+          "refId": "A"
+        }
+      ],
+      "title": "$JobName",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
             }
           },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 6,
-          "w": 6,
-          "x": 0,
-          "y": 8
-        },
-        "id": 3,
-        "maxPerRow": 4,
-        "options": {
-          "colorMode": "background",
-          "graphMode": "none",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
+          "decimals": 0,
+          "displayName": "${__field.labels.veeamVBRSessionJobName}",
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "color": "purple",
+                  "index": 3,
+                  "text": "Other"
+                },
+                "2": {
+                  "color": "red",
+                  "index": 2,
+                  "text": "Failed"
+                },
+                "3": {
+                  "color": "orange",
+                  "index": 1,
+                  "text": "Warning"
+                },
+                "4": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Success"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "max": 4,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent"
+              }
+            ]
           },
-          "showPercentChange": false,
-          "text": {
-            "valueSize": 100
-          },
-          "textMode": "auto",
-          "wideLayout": true
+          "unit": "none"
         },
-        "pluginVersion": "11.0.0",
-        "repeat": "JobName",
-        "repeatDirection": "h",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "${DS_INFLUXDB}"
-            },
-            "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamSessionJobResult\")\n  |> filter(fn: (r) => r[\"veeamVBRSessionJobName\"] =~ /${JobName:regex}/ )\n  |> group()\n  |> aggregateWindow(every: 24h, fn: min)\n",
-            "refId": "A"
-          }
-        ],
-        "title": "$JobName",
-        "transparent": true,
-        "type": "stat"
+        "overrides": []
       },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 13,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 1,
+        "fullHighlight": false,
+        "groupWidth": 1,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "single",
+          "sort": "asc"
+        },
+        "xField": "_time",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": -100
+      },
+      "pluginVersion": "10.4.2",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamSessionJobResult\")\n  |> filter(fn: (r) => r[\"veeamVBRSessionJobName\"] =~ /${JobName:regex}/ )\n  |> group(columns: [\"veeamVBRSessionJobName\"])\n  |> aggregateWindow(every: 24h, fn: min, timeSrc: \"_time\", timeDst: \"_time\", createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "transparent": true,
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS-ONPREM}"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 51,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://furycode.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fflame.26b9b203.png&w=640&q=75\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.0.0",
+      "transparent": true,
+      "type": "text"
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
       {
+        "current": {},
         "datasource": {
           "type": "influxdb",
           "uid": "${DS_INFLUXDB}"
         },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "left",
-              "fillOpacity": 100,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineWidth": 0,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "decimals": 0,
-            "displayName": "${__field.labels.veeamVBRSessionJobName}",
-            "mappings": [
-              {
-                "options": {
-                  "1": {
-                    "color": "purple",
-                    "index": 3,
-                    "text": "Other"
-                  },
-                  "2": {
-                    "color": "red",
-                    "index": 2,
-                    "text": "Failed"
-                  },
-                  "3": {
-                    "color": "orange",
-                    "index": 1,
-                    "text": "Warning"
-                  },
-                  "4": {
-                    "color": "green",
-                    "index": 0,
-                    "text": "Success"
-                  }
-                },
-                "type": "value"
-              }
-            ],
-            "max": 4,
-            "min": 0,
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "transparent",
-                  "value": null
-                }
-              ]
-            },
-            "unit": "none"
-          },
-          "overrides": []
+        "definition": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"veeamVBRSessionJobName\"])\n  |> distinct(column: \"veeamVBRSessionJobName\")\n  |> group()",
+        "hide": 0,
+        "includeAll": true,
+        "label": "JobName",
+        "multi": true,
+        "name": "JobName",
+        "options": [],
+        "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"veeamVBRSessionJobName\"])\n  |> distinct(column: \"veeamVBRSessionJobName\")\n  |> group()",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
         },
-        "gridPos": {
-          "h": 7,
-          "w": 24,
-          "x": 0,
-          "y": 26
-        },
-        "id": 13,
-        "options": {
-          "barRadius": 0,
-          "barWidth": 1,
-          "fullHighlight": false,
-          "groupWidth": 1,
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "orientation": "auto",
-          "showValue": "auto",
-          "stacking": "none",
-          "tooltip": {
-            "maxHeight": 600,
-            "mode": "single",
-            "sort": "asc"
-          },
-          "xField": "_time",
-          "xTickLabelRotation": 0,
-          "xTickLabelSpacing": -100
-        },
-        "pluginVersion": "10.4.2",
-        "repeatDirection": "h",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "${DS_INFLUXDB}"
-            },
-            "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamSessionJobResult\")\n  |> filter(fn: (r) => r[\"veeamVBRSessionJobName\"] =~ /${JobName:regex}/ )\n  |> group(columns: [\"veeamVBRSessionJobName\"])\n  |> aggregateWindow(every: 24h, fn: min, timeSrc: \"_time\", timeDst: \"_time\", createEmpty: false)",
-            "refId": "A"
-          }
-        ],
-        "transparent": true,
-        "type": "barchart"
+        "definition": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_repositories\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamVBRRepoUsed\")\n  |> keep(columns: [\"veeamVBRRepoName\"])\n  |> distinct(column: \"veeamVBRRepoName\")\n  |> group()",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Repository",
+        "multi": false,
+        "name": "Repository",
+        "options": [],
+        "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_repositories\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamVBRRepoUsed\")\n  |> keep(columns: [\"veeamVBRRepoName\"])\n  |> distinct(column: \"veeamVBRRepoName\")\n  |> group()",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
-    ],
-    "schemaVersion": 39,
-    "tags": [],
-    "templating": {
-      "list": [
-        {
-          "current": {},
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
-          },
-          "definition": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"veeamVBRSessionJobName\"])\n  |> distinct(column: \"veeamVBRSessionJobName\")\n  |> group()",
-          "hide": 0,
-          "includeAll": true,
-          "label": "JobName",
-          "multi": true,
-          "name": "JobName",
-          "options": [],
-          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_sessions\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"veeamVBRSessionJobName\"])\n  |> distinct(column: \"veeamVBRSessionJobName\")\n  |> group()",
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "type": "query"
-        },
-        {
-          "current": {},
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
-          },
-          "definition": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_repositories\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamVBRRepoUsed\")\n  |> keep(columns: [\"veeamVBRRepoName\"])\n  |> distinct(column: \"veeamVBRRepoName\")\n  |> group()",
-          "hide": 0,
-          "includeAll": false,
-          "label": "Repository",
-          "multi": false,
-          "name": "Repository",
-          "options": [],
-          "query": "from(bucket: \"veeam\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"veeam_vbr_repositories\")\n  |> filter(fn: (r) => r[\"_field\"] == \"veeamVBRRepoUsed\")\n  |> keep(columns: [\"veeamVBRRepoName\"])\n  |> distinct(column: \"veeamVBRRepoName\")\n  |> group()",
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "type": "query"
-        }
-      ]
-    },
-    "time": {
-      "from": "now-1y",
-      "to": "now"
-    },
-    "timeRangeUpdatedDuringEditOrView": false,
-    "timepicker": {},
-    "timezone": "browser",
-    "title": "Veeam Backup Overview",
-    "uid": "edl2ndtql4kxsb",
-    "version": 21,
-    "weekStart": ""
-  }
+    ]
+  },
+  "time": {
+    "from": "now-1y",
+    "to": "now"
+  },
+  "timeRangeUpdatedDuringEditOrView": false,
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Veeam Backup Overview",
+  "uid": "edl2ndtql4kxsb",
+  "version": 23,
+  "weekStart": ""
+}

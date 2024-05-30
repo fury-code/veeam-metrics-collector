@@ -1,4 +1,8 @@
 # Grafana Dashboards
+Once you import the Windows Server Overview Dashboard, it should appear as shown below (please note that some data has been blacked out in the images for privacy reasons):
+## Veeam Office 365 Overview
+
+## Veeam Backup Overview
 
 # Veeam Backup Metrics Collector
 This is a metrics collector written in Python which queries data from 
