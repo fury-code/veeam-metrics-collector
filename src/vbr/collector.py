@@ -25,9 +25,13 @@ def backup_replication(env_config):
             now = datetime.now(timezone)
             timestamp_str = now.strftime("%Y-%m-%dT%H:%M:%S%z")
         try:
-            return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.%f%z")
+            return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.%fZ")
         except ValueError:
-            return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S%z")
+            try:
+                return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%SZ")
+            except ValueError:
+                # Handle the specific case with an extra period before 'Z'
+                return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.Z")
 
     # Get bearer token for Veeam Backup & Replication
     token_url = f"{vbr_base_url}/oauth2/token"

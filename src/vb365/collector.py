@@ -25,7 +25,11 @@ def microsoft365(env_config):
         try:
             return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.%fZ")
         except ValueError:
-            return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%SZ")
+            try:
+                return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%SZ")
+            except ValueError:
+                # Handle the specific case with an extra period before 'Z'
+                return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.Z")
 
     vb365_base_url = (
         f'https://{env_config["vb365_rest_server"]}:{env_config["vb365_rest_port"]}/v7'
