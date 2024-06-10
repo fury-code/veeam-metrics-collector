@@ -3,6 +3,7 @@ import urllib3
 import pytz
 import time
 from datetime import datetime
+import dateutil.parser
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 
@@ -30,8 +31,12 @@ def backup_replication(env_config):
             try:
                 return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%SZ")
             except ValueError:
-                # Handle the specific case with an extra period before 'Z'
-                return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.Z")
+                try:
+                    # Handle the specific case with an extra period before 'Z'
+                    return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.Z")
+                except ValueError:
+                    # Handle the specific case with a timezone offset
+                    return dateutil.parser.isoparse(timestamp_str)
 
     # Get bearer token for Veeam Backup & Replication
     token_url = f"{vbr_base_url}/oauth2/token"

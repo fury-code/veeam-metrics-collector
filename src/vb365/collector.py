@@ -3,6 +3,7 @@ import urllib3
 import pytz
 import time
 from datetime import datetime
+import dateutil.parser
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 
@@ -28,8 +29,12 @@ def microsoft365(env_config):
             try:
                 return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%SZ")
             except ValueError:
-                # Handle the specific case with an extra period before 'Z'
-                return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.Z")
+                try:
+                    # Handle the specific case with an extra period before 'Z'
+                    return datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S.Z")
+                except ValueError:
+                    # Handle the specific case with a timezone offset
+                    return dateutil.parser.isoparse(timestamp_str)
 
     vb365_base_url = (
         f'https://{env_config["vb365_rest_server"]}:{env_config["vb365_rest_port"]}/v7'
