@@ -132,7 +132,8 @@ def microsoft365(env_config):
         while "next" in response.json()["_links"]:
             next_url = f'https://{env_config["vb365_rest_server"]}:{env_config["vb365_rest_port"]}{response.json()["_links"]["next"]["href"]}'
             response = requests.get(next_url, headers=vb365_headers, verify=False)
-            data.extend(response.json()["results"])
+            if "results" in response.json():
+                data.extend(response.json()["results"])
 
         for user in data:
             user_name = user["name"]
@@ -234,7 +235,8 @@ def microsoft365(env_config):
             session_response = requests.get(
                 next_url, headers=vb365_headers, verify=False
             )
-            session_data.extend(session_response.json()["results"])
+            if "results" in session_response.json():
+                session_data.extend(session_response.json()["results"])
 
         for session in session_data[:1000]:
             session_status = session["status"]
