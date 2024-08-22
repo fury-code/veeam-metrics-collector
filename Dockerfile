@@ -1,20 +1,24 @@
-# Use an official Python runtime as a parent image
-FROM python:3.12
+# Build-Stage
+FROM python:3.11-slim-bullseye AS builder
 
-# Set the working directory in the container
+RUN pip install --no-cache-dir poetry==1.6.1
+
+RUN poetry config virtualenvs.create false
+
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY src/ /app
+COPY ./pyproject.toml ./poetry.lock* ./
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN poetry install --no-interaction --no-ansi --no-root
 
-# Define the TZ environment variable
-ENV TZ=
+COPY src/ .
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Final-Stage
+FROM python:3.11-slim-bullseye
 
-# Run app.py when the container launches
+WORKDIR /app
+
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /app /app
+
 CMD ["python", "app.py"]
