@@ -7,7 +7,7 @@ This project is inspired by another project from [Jorge de la Cruz](https://gith
 ## Getting started
 You can use the default container image from this repository.
 ```bash
-docker pull ghcr.io/fury-code/veeam-metrics-collector:latest
+docker pull europe-west6-docker.pkg.dev/fury-code/public/veeam-metrics-collector:latest
 ```
 
 You can configure your experience with the following environment variables.
