@@ -119,7 +119,8 @@ def microsoft365(env_config):
     # Veeam Backup for Microsoft 365 Organization. This part will check on our Organization and retrieve Licensing Information
     organization_url = f"{vb365_base_url}/Organizations"
     response = requests.get(organization_url, headers=vb365_headers, verify=False)
-    data = response.json()
+    data_json = response.json()
+    data = data_json.get("organizations", data_json)
 
     for org in data:
         org_id = org["id"]
