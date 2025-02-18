@@ -47,7 +47,23 @@ jobs:
 
       - name: Get tag
         id: get-tag
-        run: echo "short_ref=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+          # For the main branch
+          echo "tag=main" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF}" == refs/pull/* ]]; then
+          # For pull requests, use the branch name from the event payload
+          sanitized_ref=$(echo "${GITHUB_HEAD_REF}" | tr '/' '-')
+          echo "tag=${sanitized_ref}" >> $GITHUB_OUTPUT
+          else
+          # For other branches
+          sanitized_ref=$(echo "${GITHUB_REF_NAME}" | tr '/' '-')
+          echo "tag=${sanitized_ref}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Print tag
+        run: |
+          echo "The generated branch tag is: ${{ steps.get-tag.outputs.tag }}"
 
       - id: docker-push-tagged
         name: Tag Docker image and push to Google Artifact Registry
@@ -55,6 +71,5 @@ jobs:
         with:
           push: true
           tags: |
-             ${{ env.REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${{ steps.get-tag.outputs.short_ref }}
-             ${{ env.REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:latest
+             ${{ env.REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${{ steps.get-tag.outputs.tag }}
 
