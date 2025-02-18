@@ -1,24 +1,20 @@
 # Build-Stage
-FROM python:3.11-slim-bullseye AS builder
-
-RUN pip install --no-cache-dir poetry==1.6.1
-
-RUN poetry config virtualenvs.create false
+FROM python:3.12-slim AS builder
 
 WORKDIR /app
 
-COPY ./pyproject.toml ./poetry.lock* ./
-
-RUN poetry install --no-interaction --no-ansi --no-root
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 COPY src/ .
 
 # Final-Stage
-FROM python:3.11-slim-bullseye
+FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=builder /app /app
 
 CMD ["python", "app.py"]
