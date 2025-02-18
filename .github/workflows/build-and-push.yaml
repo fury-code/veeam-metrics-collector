@@ -50,7 +50,7 @@ jobs:
         run: |
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
           # For the main branch
-          echo "tag=main" >> $GITHUB_OUTPUT
+          echo "tag=latest" >> $GITHUB_OUTPUT
           elif [[ "${GITHUB_REF}" == refs/pull/* ]]; then
           # For pull requests, use the branch name from the event payload
           sanitized_ref=$(echo "${GITHUB_HEAD_REF}" | tr '/' '-')

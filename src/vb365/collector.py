@@ -76,8 +76,10 @@ def microsoft365(env_config):
     # Veeam Backup for Microsoft 365 Version. This part will check the Veeam Backup for Microsoft 365 version
     service_url = f"{vb365_base_url}/ServiceInstance"
     response = requests.get(service_url, headers=vb365_headers, verify=False)
+    print("STATUS CODE:", response.status_code)
     data = response.json()
 
+    print("DATA:", data)
     vb365_version = data["version"]
 
     p = (
