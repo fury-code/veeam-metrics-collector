@@ -49,6 +49,7 @@ def microsoft365(env_config):
         "grant_type": "password",
         "username": env_config["veeam_username"],
         "password": env_config["veeam_password"],
+        "disable_antiforgery_token": "true",
     }
 
     response = requests.post(token_url, headers=token_headers, data=data, verify=False)
