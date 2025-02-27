@@ -25,7 +25,7 @@ requests==2.32.3
     # via veeam-metrics-collector (pyproject.toml)
 sentry-sdk==2.22.0
     # via veeam-metrics-collector (pyproject.toml)
-setuptools==75.8.0
+setuptools==75.8.2
     # via
     #   influxdb-client
     #   zope-interface

@@ -77,10 +77,8 @@ def microsoft365(env_config):
     # Veeam Backup for Microsoft 365 Version. This part will check the Veeam Backup for Microsoft 365 version
     service_url = f"{vb365_base_url}/ServiceInstance"
     response = requests.get(service_url, headers=vb365_headers, verify=False)
-    print("STATUS CODE:", response.status_code)
     data = response.json()
 
-    print("DATA:", data)
     vb365_version = data["version"]
 
     p = (
@@ -120,7 +118,7 @@ def microsoft365(env_config):
     organization_url = f"{vb365_base_url}/Organizations"
     response = requests.get(organization_url, headers=vb365_headers, verify=False)
     data_json = response.json()
-    data = data_json.get("organizations", data_json)
+    data = data_json.get("organizations", data_json).get("results")
 
     for org in data:
         org_id = org["id"]
@@ -194,7 +192,7 @@ def microsoft365(env_config):
 
     repo_url = f"{vb365_base_url}/BackupRepositories"
     response = requests.get(repo_url, headers=vb365_headers, verify=False)
-    data = response.json()
+    data = response.json().get("results")
 
     for repo in data:
         repository = repo["name"]
@@ -220,18 +218,20 @@ def microsoft365(env_config):
     # Veeam Backup for Microsoft 365 Backup Proxies. This part will check the Name and Threads Number of the Backup Proxies
     proxy_url = f"{vb365_base_url}/Proxies?extendedView=true"
     response = requests.get(proxy_url, headers=vb365_headers, verify=False)
-    data = response.json()
+    data = response.json().get("results")
 
     for proxy in data:
         hostname = proxy["hostName"]
         status = proxy["status"]
-        threads_number = proxy["threadsNumber"]
+        cpu_usage_percent = proxy["cpuUsagePercent"]
+        memory_usage_percent = proxy["memoryUsagePercent"]
 
         p = (
             influxdb_client.Point("veeam_office365_proxies")
             .tag("proxies", hostname)
             .tag("status", status)
-            .field("threadsNumber", threads_number)
+            .field("cpuUsagePercent", cpu_usage_percent)
+            .field("memoryUsagePercent", memory_usage_percent)
         )
 
         write_api.write(
@@ -243,7 +243,7 @@ def microsoft365(env_config):
     # Veeam Backup for Microsoft 365 Backup Jobs. This part will check the different Jobs, and the Job Sessions per every Job
     jobs_url = f"{vb365_base_url}/Jobs"
     response = requests.get(jobs_url, headers=vb365_headers, verify=False)
-    data = response.json()
+    data = response.json().get("results")
 
     for job in data:
         job_name = job["name"]
