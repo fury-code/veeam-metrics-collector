@@ -1,8 +1,10 @@
 import os
+
 import sentry_sdk
-from vbr.collector import backup_replication
-from vb365.collector import microsoft365
 from dotenv import load_dotenv
+
+from vb365.collector import microsoft365
+from vbr.collector import backup_replication
 
 load_dotenv()
 
@@ -39,6 +41,7 @@ env_config = {
     # VB365 specific
     "vb365_rest_server": os.getenv("VB365RESTSERVER"),
     "vb365_rest_port": os.getenv("VB365RESTPORT"),
+    "vb365_version": os.getenv("VB365VERSION"),
 }
 
 backup_replication(env_config)

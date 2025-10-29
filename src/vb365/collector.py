@@ -1,10 +1,11 @@
-import requests
-import urllib3
-import pytz
 import time
 from datetime import datetime
+
 import dateutil.parser
 import influxdb_client
+import pytz
+import requests
+import urllib3
 from influxdb_client.client.write_api import SYNCHRONOUS
 
 urllib3.disable_warnings()
@@ -36,9 +37,7 @@ def microsoft365(env_config):
                     # Handle the specific case with a timezone offset
                     return dateutil.parser.isoparse(timestamp_str)
 
-    vb365_base_url = (
-        f'https://{env_config["vb365_rest_server"]}:{env_config["vb365_rest_port"]}/v7'
-    )
+    vb365_base_url = f"https://{env_config['vb365_rest_server']}:{env_config['vb365_rest_port']}/{env_config['vb365_version']}"
 
     # Get Bearer token
     token_url = f"{vb365_base_url}/token"
@@ -50,6 +49,7 @@ def microsoft365(env_config):
         "grant_type": "password",
         "username": env_config["veeam_username"],
         "password": env_config["veeam_password"],
+        "disable_antiforgery_token": "true",
     }
 
     response = requests.post(token_url, headers=token_headers, data=data, verify=False)
@@ -92,10 +92,33 @@ def microsoft365(env_config):
         bucket=env_config["influxdb_bucket"], org=env_config["influxdb_org"], record=p
     )
 
+    # Veeam Backup for Microsoft 365 License. This part will check the License Information
+    license_url = f"{vb365_base_url}/License"
+    response = requests.get(license_url, headers=vb365_headers, verify=False)
+    data = response.json()
+
+    license_status = data["status"]
+    license_type = data["type"]
+    license_expires = data["licenseExpires"]
+    license_slots = data["totalNumber"]
+
+    p = (
+        influxdb_client.Point("veeam_office365_license")
+        .tag("licenseType", license_type)
+        .tag("licenseStatus", license_status)
+        .field("licenseSlots", license_slots)
+        .field("licenseExpires", license_expires)
+    )
+
+    write_api.write(
+        bucket=env_config["influxdb_bucket"], org=env_config["influxdb_org"], record=p
+    )
+
     # Veeam Backup for Microsoft 365 Organization. This part will check on our Organization and retrieve Licensing Information
     organization_url = f"{vb365_base_url}/Organizations"
     response = requests.get(organization_url, headers=vb365_headers, verify=False)
-    data = response.json()
+    data_json = response.json()
+    data = data_json.get("organizations", data_json).get("results")
 
     for org in data:
         org_id = org["id"]
@@ -130,7 +153,7 @@ def microsoft365(env_config):
         data = response.json()["results"]
 
         while "next" in response.json()["_links"]:
-            next_url = f'https://{env_config["vb365_rest_server"]}:{env_config["vb365_rest_port"]}{response.json()["_links"]["next"]["href"]}'
+            next_url = f"https://{env_config['vb365_rest_server']}:{env_config['vb365_rest_port']}{response.json()['_links']['next']['href']}"
             response = requests.get(next_url, headers=vb365_headers, verify=False)
             if "results" in response.json():
                 data.extend(response.json()["results"])
@@ -169,7 +192,7 @@ def microsoft365(env_config):
 
     repo_url = f"{vb365_base_url}/BackupRepositories"
     response = requests.get(repo_url, headers=vb365_headers, verify=False)
-    data = response.json()
+    data = response.json().get("results")
 
     for repo in data:
         repository = repo["name"]
@@ -195,18 +218,20 @@ def microsoft365(env_config):
     # Veeam Backup for Microsoft 365 Backup Proxies. This part will check the Name and Threads Number of the Backup Proxies
     proxy_url = f"{vb365_base_url}/Proxies?extendedView=true"
     response = requests.get(proxy_url, headers=vb365_headers, verify=False)
-    data = response.json()
+    data = response.json().get("results")
 
     for proxy in data:
         hostname = proxy["hostName"]
         status = proxy["status"]
-        threads_number = proxy["threadsNumber"]
+        cpu_usage_percent = proxy["cpuUsagePercent"]
+        memory_usage_percent = proxy["memoryUsagePercent"]
 
         p = (
             influxdb_client.Point("veeam_office365_proxies")
             .tag("proxies", hostname)
             .tag("status", status)
-            .field("threadsNumber", threads_number)
+            .field("cpuUsagePercent", cpu_usage_percent)
+            .field("memoryUsagePercent", memory_usage_percent)
         )
 
         write_api.write(
@@ -218,7 +243,7 @@ def microsoft365(env_config):
     # Veeam Backup for Microsoft 365 Backup Jobs. This part will check the different Jobs, and the Job Sessions per every Job
     jobs_url = f"{vb365_base_url}/Jobs"
     response = requests.get(jobs_url, headers=vb365_headers, verify=False)
-    data = response.json()
+    data = response.json().get("results")
 
     for job in data:
         job_name = job["name"]
@@ -231,7 +256,7 @@ def microsoft365(env_config):
         session_data = session_response.json()["results"]
 
         while "next" in session_response.json()["_links"]:
-            next_url = f'https://{env_config["vb365_rest_server"]}:{env_config["vb365_rest_port"]}{session_response.json()["_links"]["next"]["href"]}'
+            next_url = f"https://{env_config['vb365_rest_server']}:{env_config['vb365_rest_port']}{session_response.json()['_links']['next']['href']}"
             session_response = requests.get(
                 next_url, headers=vb365_headers, verify=False
             )
